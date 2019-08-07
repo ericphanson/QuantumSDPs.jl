@@ -3,6 +3,10 @@ uuid = "71f86b16-b93d-11e9-319e-0753d1594ee1"
 authors = ["Eric P. Hanson"]
 version = "0.1.0"
 
+[deps]
+Convex = "f65535da-76fb-5f13-bab9-19810c17039a"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
 [compat]
 julia = "1"
 
