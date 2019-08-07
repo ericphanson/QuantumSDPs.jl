@@ -8,7 +8,7 @@
 
 # Example
 
-```
+```julia
 julia> using QuantumSDPs, Convex, LinearAlgebra, SCS
 
 julia> p = Variable()
