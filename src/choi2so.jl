@@ -42,7 +42,7 @@ end
     choi2so(x::Convex.AbstractExpr, dA::Int, dB::Int)
 
 Convert from an (unnormalized) Choi matrix of a quantum channel `T` to a matrix representation.
-It is assume `T` is a quantum channel from `A` to `B`, where `A` is `dA`-dimensional space and `B` a `dB`-dimensional space.
+It is assumed `T` is a quantum channel from `A` to `B`, where `A` is `dA`-dimensional space and `B` a `dB`-dimensional space.
 """
 choi2so(x::Convex.AbstractExpr, dA::Int, dB::Int) = Choi2SOAtom(x, dA, dB)
 
