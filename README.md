@@ -27,7 +27,7 @@ This package exports custom `AbstractVariable`'s for use in `Convex.jl` which en
 
 Here is a very simple example which illustrates one of the features of the package: `Choi` matrices may be called as functions for the channel action.
 
-```
+```julia
 julia> using QuantumSDPs, Convex, LinearAlgebra, SCS
 
 julia> p = Variable()
@@ -108,7 +108,6 @@ dual res:   |A'y + c|_2 / (1 + |c|_2) = 7.9929e-08
 rel gap:    |c'x + b'y| / (1 + |c'x| + |b'y|) = 4.5981e-08
 ----------------------------------------------------------------------------
 c'x = 0.0000, -b'y = 0.0000
-============================================================================
 
 julia> prob.optval
 1.9195664539207518e-7
