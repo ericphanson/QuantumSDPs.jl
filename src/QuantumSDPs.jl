@@ -3,7 +3,7 @@ module QuantumSDPs
 import Convex
 
 
-include("types.jl")
+include("types/QuantumVariable.jl")
 include("choi2so.jl")
 
 end # module
