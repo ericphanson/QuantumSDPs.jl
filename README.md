@@ -51,7 +51,7 @@ julia> id = Diagonal(ones(2))
  1.0   ⋅ 
   ⋅   1.0
 
-julia> N(ρ) = p*id*tr(ρ) + (1-p)*ρ # depolarizing channel
+julia> N(ρ) = p*id/2*tr(ρ) + (1-p)*ρ # depolarizing channel
 N (generic function with 1 method)
 
 julia> ρ = [1.0 0.0; 0.0 0.0]
@@ -62,7 +62,7 @@ julia> ρ = [1.0 0.0; 0.0 0.0]
 julia> J = Choi(2)
 Variable of
 size: (4, 4)
-sign: NoSign()
+sign: ComplexSign()
 vexity: AffineVexity()
 
 julia> prob = minimize(nuclearnorm(J(N(ρ)) - ρ)) # invert the action of N on ρ by minimizing trace distance
@@ -82,33 +82,34 @@ julia> solve!(prob, SCSSolver())
         SCS v2.0.2 - Splitting Conic Solver
         (c) Brendan O'Donoghue, Stanford University, 2012-2017
 ----------------------------------------------------------------------------
-Lin-sys: sparse-indirect, nnz in A = 53, CG tol ~ 1/iter^(2.00)
+Lin-sys: sparse-indirect, nnz in A = 161, CG tol ~ 1/iter^(2.00)
 eps = 1.00e-05, alpha = 1.50, max_iters = 5000, normalize = 1, scale = 1.00
 acceleration_lookback = 20, rho_x = 1.00e-03
-Variables n = 25, constraints m = 37
-Cones:  primal zero / dual free vars: 17
-        sd vars: 20, sd blks: 2
-Setup time: 6.82e-05s
+Variables n = 41, constraints m = 137
+Cones:  primal zero / dual free vars: 65
+        sd vars: 72, sd blks: 2
+Setup time: 1.00e-04s
 ----------------------------------------------------------------------------
  Iter | pri res | dua res | rel gap | pri obj | dua obj | kap/tau | time (s)
 ----------------------------------------------------------------------------
-     0| 4.09e+19  4.23e+19  1.00e+00 -1.38e+20  5.48e+19  2.86e+19  6.13e-05 
-    60| 5.15e-08  7.99e-08  4.60e-08  1.92e-07  1.46e-07  1.17e-17  1.73e-03 
+     0| 1.68e+00  2.96e+00  9.22e-01 -5.34e+00  6.44e+00  2.25e-15  1.03e-04 
+    40| 1.51e-08  3.92e-08  1.36e-07 -1.01e-08  1.26e-07  4.25e-17  3.02e-03 
 ----------------------------------------------------------------------------
 Status: Solved
-Timing: Solve time: 1.74e-03s
-        Lin-sys: avg # CG iterations: 3.33, avg solve time: 1.81e-06s
-        Cones: avg projection time: 1.21e-05s
-        Acceleration: avg step time: 1.25e-05s
+Timing: Solve time: 3.03e-03s
+        Lin-sys: avg # CG iterations: 2.73, avg solve time: 5.74e-06s
+        Cones: avg projection time: 4.12e-05s
+        Acceleration: avg step time: 2.20e-05s
 ----------------------------------------------------------------------------
 Error metrics:
-dist(s, K) = 5.7776e-12, dist(y, K*) = 2.9776e-09, s'y/|s||y| = 6.5224e-08
-primal res: |Ax + s - b|_2 / (1 + |b|_2) = 5.1517e-08
-dual res:   |A'y + c|_2 / (1 + |c|_2) = 7.9929e-08
-rel gap:    |c'x + b'y| / (1 + |c'x| + |b'y|) = 4.5981e-08
+dist(s, K) = 4.4962e-08, dist(y, K*) = 1.8990e-08, s'y/|s||y| = -2.3188e-08
+primal res: |Ax + s - b|_2 / (1 + |b|_2) = 1.5140e-08
+dual res:   |A'y + c|_2 / (1 + |c|_2) = 3.9185e-08
+rel gap:    |c'x + b'y| / (1 + |c'x| + |b'y|) = 1.3598e-07
 ----------------------------------------------------------------------------
-c'x = 0.0000, -b'y = 0.0000
+c'x = -0.0000, -b'y = 0.0000
+============================================================================
 
 julia> prob.optval
-1.9195664539207518e-7
+-1.010561371686164e-8
 ```

@@ -1,4 +1,16 @@
-"An `AbstractVariable` which represents the Choi matrix of a quantum channel."
+"""
+    mutable struct Choi{dA, dB} <: QuantumVariable
+
+An `AbstractVariable` which represents the Choi matrix of a quantum channel.
+
+If `T` is a quantum channel from system A to system B, then its Choi matrix
+is a `dA*dB` by `dA*dB` matrix given by `J` where
+
+    J = T ⊗ id (Ω)
+
+and `Ω =|Ω⟩⟨Ω|` where `|Ω⟩ = ∑ᵢ |i⟩|i⟩` is the unnormalized maximally
+entangled state.
+"""
 mutable struct Choi{dA, dB} <: QuantumVariable
     head::Symbol
     id_hash::UInt64
@@ -15,15 +27,7 @@ mutable struct Choi{dA, dB} <: QuantumVariable
     Choi(d::Int) = Choi(d, d)
 end
 
-function Ipart(d, dfull)
-    v = ones(dfull)
-    if d < dfull
-        v[d+1:dfull] .= 0.0
-    end
-    Diagonal(v)
-end
-
-Convex.constraints(J::Choi{dA, dB}) where {dA, dB} = [ J ⪰ 0, Convex.partialtrace(J, 1, [dB, dA]) == Ipart(min(dA,dB), dA) ]
+Convex.constraints(J::Choi{dA, dB}) where {dA, dB} = [ J ⪰ 0, Convex.partialtrace(J, 1, [dB, dA]) == I(dA) ]
 Convex.sign(::Choi) = Convex.ComplexSign()
 Convex.vartype(::Choi) = Convex.ContVar
 Convex.eltype(::Choi) = ComplexF64

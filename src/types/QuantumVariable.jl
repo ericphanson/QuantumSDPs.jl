@@ -2,7 +2,6 @@ abstract type QuantumVariable <: Convex.AbstractVariable end
 
 export ProbabilityVector, DensityMatrix, Choi
 
-using LinearAlgebra
 using Convex: ⪰
 
 include("probability_vectors.jl")
