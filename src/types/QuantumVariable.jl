@@ -1,4 +1,4 @@
-abstract type QuantumVariable <: Convex.AbstractVariable end
+abstract type QuantumVariable{T} <: Convex.AbstractVariable{T} end
 
 export ProbabilityVector, DensityMatrix, Choi
 

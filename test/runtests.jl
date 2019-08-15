@@ -8,10 +8,9 @@ if VERSION < v"1.2pre"
     import LinearAlgebra.I
     (I::UniformScaling)(n::Integer) = Diagonal(fill(I.λ, n))
 end
-
+const ⊗ = kron
 ket(i, d) = sparsevec([i], [true], d)
 bra(i, d) = ket(i, d)'
-const ⊗ = kron
 ketbra(i,j, d) = ket(i,d) ⊗ bra(j, d)
 
 @testset "QuantumSDPs.jl" begin
@@ -38,6 +37,9 @@ ketbra(i,j, d) = ket(i,d) ⊗ bra(j, d)
             # check conic_form agrees with the numeric implementation
             @test evaluate(T) ≈ choi2so(evaluate(J), dA, dB) atol=1e-4
 
+            # check we can map back
+            @test so2choi(evaluate(T), dA, dB) ≈ evaluate(J) atol=1e-4
+
             # check that `T` is unital
             @test evaluate(T)' * vec(I(dB)) ≈ vec(I(dA)) atol=1e-4
 
@@ -55,7 +57,7 @@ ketbra(i,j, d) = ket(i,d) ⊗ bra(j, d)
 
                 # check that the method for using J as a function
                 # agrees with `f_R`
-                @test f_R(ρ) ≈ evaluate(J(ρ)) atol=1e-4
+                # @test f_R(ρ) ≈ evaluate(J(ρ)) atol=1e-4
 
 
                 # check against the naive definition of the Choi matrix
@@ -66,4 +68,5 @@ ketbra(i,j, d) = ket(i,d) ⊗ bra(j, d)
 
         end
     end
+
 end
